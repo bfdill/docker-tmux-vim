@@ -2,12 +2,14 @@ FROM ubuntu:16.10
 
 RUN apt-get update -y \
 	&& apt-get install -y \
+    dos2unix \
     build-essential cmake curl \
     fontconfig git gitk \
     nodejs npm \
     python-dev python-pip \
     silversearcher-ag tmux \
     vim wget \
+    cscope clang \
   && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip \
@@ -30,7 +32,9 @@ WORKDIR /root
 RUN wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols.otf https://github.com/Lokaltog/powerline/raw/develop/font/10-powerline-symbols.conf \
   && mv PowerlineSymbols.otf /usr/share/fonts/ \
   && fc-cache -vf \
-  && mv 10-powerline-symbols.conf /etc/fonts/conf.d/
+  && mv 10-powerline-symbols.conf /etc/fonts/conf.d/ \
+  && dos2unix .vimrc && dos2unix .tmux.conf
+
 
 # ENV NVM_DIR /usr/local/nvm
 # ENV NODE_VERSION 6.3.1
@@ -45,11 +49,12 @@ RUN wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols
 # ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 # ENV PATH      $NVM_DIR/v$NODE_VERSION/bin:$PATH
 
-# WORKDIR /root/.vim/bundle
-# RUN ./vim_plugins_install.sh
+
+WORKDIR /root/.vim/bundle
+RUN dos2unix vim_plugins_install.sh && ./vim_plugins_install.sh
 
 #RUN /bin/bash -c 'cd ~/.vim/bundle && ./vim_plugins_install.sh'
-RUN mkdir -p /root/projects
-WORKDIR /root/projects
-VOLUME [ "/root/projects" ]
+#RUN mkdir -p /root/projects
+#WORKDIR /root/projects
+#VOLUME [ "/root/projects" ]
 ENTRYPOINT ["/bin/bash"]
