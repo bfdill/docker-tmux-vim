@@ -213,3 +213,5 @@ let g:tsuquyomi_disable_quickfix = 1
 
 nnoremap <Leader>gw :wa<CR> :Git add .<CR>:Git commit -m "WIP"<CR> :Gpush<CR>
 let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
+
+set t_Co=256

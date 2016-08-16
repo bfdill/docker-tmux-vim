@@ -1,8 +1,10 @@
 #!/bin/bash
 
 REPOS=(
+brookhong/cscope.vim
+mbbill/code_complete
+Shougo/vimproc.vim
 vim-scripts/VimClojure
-luchermitte/lh-cpp
 rking/ag.vim
 jlanzarotta/bufexplorer
 raimondi/delimitmate
