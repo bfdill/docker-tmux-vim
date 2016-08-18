@@ -14,7 +14,8 @@ RUN apt-get update -y \
 
 RUN pip install --upgrade pip \
   && pip install --upgrade virtualenv \
-  && pip install powerline-status
+  && pip install powerline-status \
+  && ln -s /usr/bin/nodejs /usr/bin/node
 
 # Set the locale
 RUN locale-gen en_US.UTF-8  
