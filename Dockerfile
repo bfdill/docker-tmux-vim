@@ -14,7 +14,8 @@ RUN apt-get update -y \
 
 RUN pip install --upgrade pip \
   && pip install --upgrade virtualenv \
-  && pip install powerline-status
+  && pip install powerline-status \
+  && ln -s /usr/bin/nodejs /usr/bin/node
 
 # Set the locale
 RUN locale-gen en_US.UTF-8  
@@ -33,8 +34,7 @@ RUN wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols
   && mv PowerlineSymbols.otf /usr/share/fonts/ \
   && fc-cache -vf \
   && mv 10-powerline-symbols.conf /etc/fonts/conf.d/ \
-  && dos2unix .vimrc && dos2unix .tmux.conf
-
+  && dos2unix .vimrc && dos2unix .tmux.conf && dos2unix /root/.vim/bundle/vim_plugins_install.sh
 
 # ENV NVM_DIR /usr/local/nvm
 # ENV NODE_VERSION 6.3.1
@@ -51,10 +51,8 @@ RUN wget https://github.com/Lokaltog/powerline/raw/develop/font/PowerlineSymbols
 
 
 WORKDIR /root/.vim/bundle
-RUN dos2unix vim_plugins_install.sh && ./vim_plugins_install.sh
+RUN ./vim_plugins_install.sh
 
-#RUN /bin/bash -c 'cd ~/.vim/bundle && ./vim_plugins_install.sh'
-#RUN mkdir -p /root/projects
-#WORKDIR /root/projects
-#VOLUME [ "/root/projects" ]
+WORKDIR /root/
+
 ENTRYPOINT ["/bin/bash"]
